@@ -2,12 +2,15 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class AttackOperation {
 	static String send="",recive="";
 	
-	public static void webAttack(DataInputStream din,DataOutputStream dout,BufferedReader br)throws Exception{
-		System.out.print("Enter the website to redirect the client: ");
-		send = br.readLine();
+	public static void webAttack(JFrame j,DataInputStream din,DataOutputStream dout)throws Exception{
+		String str = "Enter the web url :";
+		send = JOptionPane.showInputDialog(j,str);;
 		dout.writeUTF(send);
 		recive = din.readUTF();
 		System.out.println(recive);		

