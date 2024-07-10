@@ -6,10 +6,7 @@ public class ClientMain {
 		Client c = new Client();
 		while(true){
 			c.ConnectToServer();
-			try {
-				Thread.sleep(10000);
-			} catch (Exception e) {
-			}
+			try { Thread.sleep(10000);} catch (Exception e) {}
 		}
 
 	}
