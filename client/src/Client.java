@@ -87,9 +87,16 @@ public class Client {
 				else if(recive.startsWith("dir")){
 					String arr[] = recive.split("`");
 					recive = arr[1];
+					System.out.println(recive);
 					send = op.fileExplore(recive);
 					dout.writeUTF(send);
 					dout.flush();
+				}
+				
+				else if(recive.startsWith("download")){
+					String arr[] = recive.split("`");
+					recive = arr[1];
+					op.fileDownload(recive,dout);
 				}
 				
 				else if(recive.length()>7){
