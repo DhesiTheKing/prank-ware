@@ -1,7 +1,8 @@
 # Prank-ware
-This a GUI based Windows spyware application created using Java for discreet user activity monitoring and some other fun activities with client. This is undetectable by anti-virusus and windows defender. The only requirement for this project was JDK.
-# Features
-
+This a GUI based Windows spyware application created using Java for discreet user activity monitoring and some other fun activities with client. This is undetectable by anti-virusus and windows defender.Replace the IP in the client file with your System's file.
+# Reqirements
+-JDK should installed in both systems.
+-Should be connected in the same network.
 # Demo
 
 when the client connected with you. You will recive this Message
